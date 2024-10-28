@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Blog = require("./Blog")
+const User = require("./User")
 
 const CommentSchema = new mongoose.Schema({
   content: {
