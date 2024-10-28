@@ -6,18 +6,36 @@ const createBlog = asyncWrapper(async (req, res) => {
   res.status(201).json({ blog });
 });
 
+// const getAllBlogs = asyncWrapper(async (req, res) => {
+//   const blog = await Blogs.find({})
+//     .populate('user', 'username')
+//     .populate('comments');
+//   res.status(200).json({ blog });
+// });
+
+// const getBlog = asyncWrapper(async (req, res) => {
+//   const { id: blogID } = req.params;
+//   const blog = await Blogs.findOne({ _id: blogID })
+//     .populate('user', 'username')
+//     .populate('comments');
+//   if (!blog) {
+//     return res.status(404).json({ msg: `No blog with id ${blogID}` });
+//   }
+//   res.status(200).json({ blog });
+// });
+
 const getAllBlogs = asyncWrapper(async (req, res) => {
   const blog = await Blogs.find({})
-    .populate('user', 'username')
-    .populate('comments');
+    // .populate('User', 'username')
+    // .populate('comments');
   res.status(200).json({ blog });
 });
 
 const getBlog = asyncWrapper(async (req, res) => {
   const { id: blogID } = req.params;
   const blog = await Blogs.findOne({ _id: blogID })
-    .populate('user', 'username')
-    .populate('comments');
+    // .populate('User', 'username')
+    // .populate('comments');
   if (!blog) {
     return res.status(404).json({ msg: `No blog with id ${blogID}` });
   }
@@ -30,7 +48,7 @@ const deleteBlog = asyncWrapper(async (req, res) => {
   if (!blog) {
     return res.status(404).json({ msg: `No blog with id ${blogID}` });
   }
-  res.status(200).json({ blog });
+  res.status(200).json({ "msg": "Blog has been deleted" });
 });
 
 const updateBlog = asyncWrapper(async (req, res) => {
@@ -48,12 +66,12 @@ const updateBlog = asyncWrapper(async (req, res) => {
 
 const likeBlog = asyncWrapper(async (req, res) => {
   const { id: blogID } = req.params;
-  const blog = await Blogs.findByIdAndUpdate(
+  const updatedBlog = await Blogs.findByIdAndUpdate(
     blogID,
     { $inc: { likes: 1 } },
     { new: true }
   );
-  res.status(200).json({ blog });
+  res.status(200).json({ blog: updatedBlog });
 });
 
 const dislikeBlog = asyncWrapper(async (req, res) => {
