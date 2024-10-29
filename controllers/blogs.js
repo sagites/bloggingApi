@@ -2,27 +2,10 @@ const Blogs = require("../models/Blog");
 const asyncWrapper = require("../middleware/async");
 
 const createBlog = asyncWrapper(async (req, res) => {
-  const blog = await Blogs.create({ ...req.body, user: req.user._id });
+  const userId = req.user._id;
+  const blog = await Blogs.create({ ...req.body, user: userId });
   res.status(201).json({ blog });
 });
-
-// const getAllBlogs = asyncWrapper(async (req, res) => {
-//   const blog = await Blogs.find({})
-//     .populate('user', 'username')
-//     .populate('comments');
-//   res.status(200).json({ blog });
-// });
-
-// const getBlog = asyncWrapper(async (req, res) => {
-//   const { id: blogID } = req.params;
-//   const blog = await Blogs.findOne({ _id: blogID })
-//     .populate('user', 'username')
-//     .populate('comments');
-//   if (!blog) {
-//     return res.status(404).json({ msg: `No blog with id ${blogID}` });
-//   }
-//   res.status(200).json({ blog });
-// });
 
 const getAllBlogs = asyncWrapper(async (req, res) => {
   const blog = await Blogs.find({})
