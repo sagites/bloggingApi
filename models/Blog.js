@@ -40,6 +40,10 @@ const blogPostSchema = new mongoose.Schema({
     dislikes: {
         type: Number,
         default: 0
+    },
+    bookmarks: {
+        type: Boolean,
+        default: 0
     }
 });
 
